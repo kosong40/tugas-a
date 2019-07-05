@@ -280,9 +280,9 @@ class ApiAll extends Controller
             })
             ->addColumn('action', function ($data) {
                 if ($data->status != "Belum") {
-                    return '<a class="btn btn-success btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' . $data->slug . '/' . $data->kode .  '/detail' . '>Detail </a>';
+                    return '<a class="btn btn-success btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' . $data->slug . '/sub/' . $data->kode .  '/detail' . '>Detail </a>';
                 } elseif ($data->status == "Belum") {
-                    return '<a class="btn btn-warning btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' . $data->slug . '/' . $data->kode .  '/ubah' . '>Ubah Data </a>';
+                    return '<a class="btn btn-warning btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' . $data->slug . '/sub/' . $data->kode .  '/ubah' . '>Ubah Data </a>';
                 }
             })
             ->addIndexColumn()

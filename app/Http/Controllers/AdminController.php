@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cookie;
 use App\Helpers\kustom;
@@ -517,13 +518,11 @@ class AdminController extends Controller
     public function testing(Request $request)
     {
         $request->validate([
-            'gambar'    =>  'required | mimes:jpeg,jpg,png,PNG | max:2048',
+            'image'    =>  'required',
         ]);
-        $gambar = $request->file('gambar');
-        $ktp    =   "imbxx." . $gambar->getClientOriginalExtension();
-        $path   =   "berkas/imb/ktp/";
-        $upload = $request->file('gambar')->move($path, $ktp);
-        dd($path . $ktp);
+        $upload_ktp = Kustom::uploadBerkas($request->file('image'),'testing-upload-image','pertama');
+        // dd($upload_ktp);
+        return redirect()->back();
     }
     public function noSKLayanan($kode, $id, $slug, Request $request)
     {

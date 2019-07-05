@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Cookie;
 */
 
 Route::get('/testing', function () {
-    return view('v2/dashboard');
+    return view('testing');
     // dd(Cookie::get('laravel_session'));
     // $string = "ABCDEFGHIJKLMNOPQRETUVWXYZabcdefghijklmnopqrstuwvxyz1234567890";
     // $acak = substr(str_shuffle($string),0,16);
@@ -104,8 +104,12 @@ Route::group(['middleware' => ['sesi']], function () {
         route::get('/data-pemohon/{slug}', 'DesaV2@datapemohonDetail');
         route::get('/data-pemohon/{slug}/{slug1}', 'DesaV2@datapemohonDetailSub');
 
+        route::get('/data-pemohon/{slug}/sub/{kode}/detail','DesaV2@DetailPemohonSub');
+        route::get('/data-pemohon/{slug}/sub/{kode}/ubah','DesaV2@UbahDetailPemohonSub');
+
         route::get('/data-pemohon/{slug}/{kode}/detail', 'DesaV2@DetailPemohon');
         route::get('/data-pemohon/{slug}/{kode}/ubah', 'DesaV2@UbahDetailPemohon');
+
 
         route::get('/pengaturan-akun', 'DesaV2@pengaturanAkun')->name('akunDaerah');
         route::post('/pengaturan-akun/profil-akun', 'KecamatanV2@akunProfil')->name('profilAkunDaerah');

@@ -105,4 +105,14 @@ class kustom
         $acak = substr(str_shuffle($string), 0, $banyak);
         return $acak;
     }
+    public static function uploadBerkas($file,$slug,$folder)
+    {
+        $string = "ABCDEFGHIJKLMNOPQRETUVWXYZabcdefghijklmnopqrstuwvxyz1234567890";
+        $acak = substr(str_shuffle($string), 0, 16);
+        $path_a =   "berkas/$slug/$folder/";
+        $nama_a =   $acak. "_$folder." . $file->getClientOriginalExtension();
+        $file->move($path_a, $nama_a);
+        $url = $path_a.$nama_a;
+        return $url;
+    }
 }

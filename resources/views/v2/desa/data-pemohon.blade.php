@@ -10,7 +10,7 @@
     <div class="col-sm-12 col-lg-3">
         <div class="card bg-light">
             <div class="card-body">
-                <h4 class="card-title">{{$pelayanan->pelayanan}}</h4>
+                <h5 class="card-title text-center">{{$pelayanan->pelayanan}}</h5>
                 <table class="table no-border mini-table m-t-20">
                     <tbody>
                         <tr>

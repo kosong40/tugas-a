@@ -4,7 +4,7 @@
     <div class="form-group row">
         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Nama Usaha</label>
         <div class="col-sm-9">
-            <input type="text" value="{{old('nama_usaha')}}" class="form-control @if($errors->get('nama_usaha')) is-invalid @endif" name="nama_usaha" placeholder="Nama Usaha">
+            <input type="text" value="{{$data->nama_usaha}}" class="form-control @if($errors->get('nama_usaha')) is-invalid @endif" name="nama_usaha" placeholder="Nama Usaha">
             @if($errors->get('nama_usaha'))
                 @foreach ($errors->get('nama_usaha') as $pesan)
                     <div class="invalid-feedback">
@@ -17,7 +17,7 @@
     <div class="form-group row">
         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Alamat Usaha</label>
         <div class="col-sm-9">
-            <input type="text" value="{{old('alamat_usaha')}}" class="form-control @if($errors->get('alamat_usaha')) is-invalid @endif" name="alamat_usaha" placeholder="Alamat Usaha">
+            <input type="text" value="{{$data->alamat_usaha}}" class="form-control @if($errors->get('alamat_usaha')) is-invalid @endif" name="alamat_usaha" placeholder="Alamat Usaha">
             @if($errors->get('alamat_usaha'))
                 @foreach ($errors->get('alamat_usaha') as $pesan)
                     <div class="invalid-feedback">
@@ -30,7 +30,7 @@
     <div class="form-group row">
         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Jumlah Monitor</label>
         <div class="custom-file col-sm-9">
-            <input type="number" value="{{old('jumlah_monitor')}}" class="form-control @if($errors->get('jumlah_monitor')) is-invalid @endif" name="jumlah_monitor" placeholder="Jumlah Monitor">
+            <input type="number" value="{{$data->jumlah_monitor}}" class="form-control @if($errors->get('jumlah_monitor')) is-invalid @endif" name="jumlah_monitor" placeholder="Jumlah Monitor">
             @if($errors->get('jumlah_monitor'))
                 @foreach ($errors->get('jumlah_monitor') as $pesan)
                     <div class="invalid-feedback">

@@ -3,8 +3,9 @@
 @section('breadcrumb')
 <li class="breadcrumb-item"><a href="{{url('desa/v2/')}}">Beranda</a></li>
 <li class="breadcrumb-item"><a href="{{url('desa/v2/data-pemohon')}}">Data Layanan</a></li>
-<li class="breadcrumb-item"><a href="{{url('desa/v2/data-pemohon/'.$layanan->slug)}}">{{$layanan->pelayanan}}</a>
+<li class="breadcrumb-item"><a href="{{url('desa/v2/data-pemohon/'.$pelayanan->slug)}}">{{$pelayanan->pelayanan}}</a>
 </li>
+<li class="breadcrumb-item"><a href="{{url('desa/v2/data-pemohon/'.$pelayanan->slug.'/'.$data->slug)}}">{{$data->subpelayanan}}</a></li>
 <li class="breadcrumb-item active" aria-current="page">{{$data->nik}}</li>
 @endsection
 @section('content')
@@ -54,6 +55,7 @@ default:$hari = date("l");break;
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title m-t-10">Pelayanan <br> {{$data->pelayanan}}</h4>
+                <h6>{{$data->subpelayanan}}</h6>
                 @if ($data->no_sk ==null)
 
                 @else

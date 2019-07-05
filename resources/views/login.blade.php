@@ -60,7 +60,7 @@
                             <a onclick="show()" href="#"><i class="ti-lock"> </i></a>
                         </div>
                         @php
-                        $acak = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"),0,4);
+                        $acak = substr(str_shuffle("1234567890"),0,6);
                         @endphp
                         <h1 align="center" oncopy="return false"><label for="" class="label-control">{{$acak}}</label>
                         </h1><br>

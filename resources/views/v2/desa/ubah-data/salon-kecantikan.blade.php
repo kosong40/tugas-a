@@ -4,7 +4,7 @@
     <div class="form-group row">
         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Nama Usaha</label>
         <div class="col-sm-9">
-            <input type="text" value="{{old('nama_usaha')}}" class="form-control @if($errors->get('nama_usaha')) is-invalid @endif" name="nama_usaha" placeholder="Nama Usaha">
+            <input type="text" value="{{$data->nama_usaha}}" class="form-control @if($errors->get('nama_usaha')) is-invalid @endif" name="nama_usaha" placeholder="Nama Usaha">
             @if($errors->get('nama_usaha'))
                 @foreach ($errors->get('nama_usaha') as $pesan)
                     <div class="invalid-feedback">
@@ -17,7 +17,7 @@
     <div class="form-group row">
         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Alamat Usaha</label>
         <div class="col-sm-9">
-            <input type="text" value="{{old('alamat_usaha')}}" class="form-control @if($errors->get('alamat_usaha')) is-invalid @endif" name="alamat_usaha" placeholder="Alamat Usaha">
+            <input type="text" value="{{$data->alamat_usaha}}" class="form-control @if($errors->get('alamat_usaha')) is-invalid @endif" name="alamat_usaha" placeholder="Alamat Usaha">
             @if($errors->get('alamat_usaha'))
                 @foreach ($errors->get('alamat_usaha') as $pesan)
                     <div class="invalid-feedback">
@@ -30,11 +30,8 @@
     <div class="form-group row">
         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Jenis Permohonan</label>
         <div class="col-sm-9">
-            <select name="jenis" class="form-control @if($errors->get('jenis')) is-invalid @endif" value="{{old('jenis')}}" id="jenis_permohonan">
-                <option selected>Pilih Jenis Permohonan</option>
-                <option value="1">Permohonan Baru</option>
-                <option value="2">Daftar Ulang</option>
-                <option value="3">Balik Nama</option>
+            <select readonly name="jenis" class="form-control @if($errors->get('jenis')) is-invalid @endif" value="{{old('jenis')}}" id="jenis_permohonan">
+            <option value="{{$data->jenis}}">{{$data->jenis}}</option>
             </select>
             @if($errors->get('jenis'))
                 @foreach ($errors->get('jenis') as $pesan)
@@ -45,10 +42,11 @@
             @endif
         </div>
     </div>
+    @if($data->jenis == "Balik Nama")
     <div class="form-group row" id="balik_nama">
         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Nama Pemilik Usaha Lama</label>
         <div class="col-sm-9">
-            <input type="text" value="{{old('usaha_lama')}}" class="form-control @if($errors->get('usaha_lama')) is-invalid @endif" name="usaha_lama" placeholder="Nama Pemilik Usaha Lama">
+            <input type="text" value="{{$data->nama_usaha_baru}}" class="form-control @if($errors->get('usaha_lama')) is-invalid @endif" name="usaha_lama" placeholder="Nama Pemilik Usaha Lama">
             @if($errors->get('usaha_lama'))
                 @foreach ($errors->get('usaha_lama') as $pesan)
                     <div class="invalid-feedback">
@@ -58,6 +56,7 @@
             @endif
         </div>
     </div>
+    @else @endif
 </div>
 <div class="card-body">
 <h4 class="card-title">Berkas Lampiran</h4>
@@ -90,16 +89,6 @@
 </div>
 @section('js')
     <script>
-    $(document).ready(function(){
-        $("#balik_nama").hide('true');
-            $('#jenis_permohonan').on('change',function(){
-            var optionText = $(this).val();
-            if(optionText == "3"){
-                $("#balik_nama").show('true');
-            }else{
-                $("#balik_nama").hide('true');
-            }
-        });
-    });
+    
     </script>
 @endsection

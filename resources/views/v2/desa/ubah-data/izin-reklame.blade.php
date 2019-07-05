@@ -4,7 +4,7 @@
                 <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Jenis Reklame</label>
                 <div class="col-sm-9">
                     <select name="id_reklame" class="custom-select mr-sm-2">
-                        <option selected>Pilih</option>
+                    <option value="{{$nama_reklame->id}}">{{$nama_reklame->nama_reklame}}</option>
                         @foreach ($reklame as $reklame)
                             <option value="{{$reklame->id}}">{{$reklame->nama_reklame}}</option>
                         @endforeach
@@ -14,7 +14,7 @@
             <div class="form-group row">
                 <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Banyak Reklame</label>
                 <div class="col-sm-9">
-                    <input type="number" value="{{old('banyak')}}" class="form-control @if($errors->get('banyak')) is-invalid @endif" name="banyak" placeholder="Banyak Reklame">
+                <input type="number" value="{{$data->banyak}}" class="form-control @if($errors->get('banyak')) is-invalid @endif" name="banyak" placeholder="Banyak Reklame">
                     @if($errors->get('banyak'))
                         @foreach ($errors->get('banyak') as $pesan)
                             <div class="invalid-feedback">
@@ -27,7 +27,7 @@
             <div class="form-group row">
                 <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Pesan Produk</label>
                 <div class="col-sm-9">
-                    <input type="text" value="{{old('pesan_produk')}}" class="form-control @if($errors->get('pesan_produk')) is-invalid @endif" name="pesan_produk" placeholder="Pesan Produk">
+                    <input type="text" value="{{$data->pesan_produk}}" class="form-control @if($errors->get('pesan_produk')) is-invalid @endif" name="pesan_produk" placeholder="Pesan Produk">
                     @if($errors->get('pesan_produk'))
                         @foreach ($errors->get('pesan_produk') as $pesan)
                             <div class="invalid-feedback">
@@ -40,7 +40,7 @@
             <div class="form-group row">
                 <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Tempat Pemasangan</label>
                 <div class="col-sm-9">
-                    <input type="text" value="{{old('tempat_reklame')}}" class="form-control @if($errors->get('tempat_reklame')) is-invalid @endif" name="tempat_reklame" placeholder="Tempat Pemasangan">
+                    <input type="text" value="{{$data->tempat_reklame}}" class="form-control @if($errors->get('tempat_reklame')) is-invalid @endif" name="tempat_reklame" placeholder="Tempat Pemasangan">
                     @if($errors->get('tempat_reklame'))
                         @foreach ($errors->get('tempat_reklame') as $pesan)
                             <div class="invalid-feedback">
@@ -54,7 +54,7 @@
             <div class="form-group row">
                 <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Tanggal Awal</label>
                 <div class="col-sm-9">
-                    <input type="date" value="{{old('tanggal_awal')}}" name="tanggal_awal" class="form-control  @if($errors->get('tanggal_awal')) is-invalid @endif" placeholder="mm/dd/yyyy">
+                    <input type="date" value="{{$data->tanggal_awal}}" name="tanggal_awal" class="form-control  @if($errors->get('tanggal_awal')) is-invalid @endif" placeholder="mm/dd/yyyy">
                      @if($errors->get('tanggal_awal'))
                         @foreach ($errors->get('tanggal_awal') as $pesan)
                             <div class="invalid-feedback">
@@ -67,7 +67,7 @@
             <div class="form-group row">
                 <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-9">
-                    <input type="date" value="{{old('tanggal_akhir')}}" name="tanggal_akhir" class="form-control  @if($errors->get('tanggal_akhir')) is-invalid @endif" placeholder="mm/dd/yyyy">
+                    <input type="date" value="{{$data->tanggal_akhir}}" name="tanggal_akhir" class="form-control  @if($errors->get('tanggal_akhir')) is-invalid @endif" placeholder="mm/dd/yyyy">
                      @if($errors->get('tanggal_akhir'))
                         @foreach ($errors->get('tanggal_akhir') as $pesan)
                             <div class="invalid-feedback">
