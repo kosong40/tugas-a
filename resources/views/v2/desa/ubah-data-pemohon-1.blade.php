@@ -8,7 +8,7 @@
 <li class="breadcrumb-item active">{{$data->nik}}</li>
 @endsection
 @section('content')
-<form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+<form class="form-horizontal" action="{{route('ubahdata1',[$pelayanan->slug,$kode])}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="card-body">
         <h4 class="card-title">Informasi Pemohon</h4>

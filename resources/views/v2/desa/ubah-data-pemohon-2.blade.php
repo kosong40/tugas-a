@@ -9,7 +9,7 @@
 <li class="breadcrumb-item active">{{$data->nik}}</li>
 @endsection
 @section('content')
-<form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+<form class="form-horizontal" action="{{route('ubahdata1',[$data->slug,$kode])}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="card-body">
         <h4 class="card-title">Informasi Pemohon</h4>
@@ -78,6 +78,22 @@
                 @endif
             </div>
         </div>
+        @if($sublayanan->slug == "atraksi-wisata")
+        <div class="form-group row">
+            <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Umur</label>
+            <div class="custom-file col-sm-9">
+                <input type="number" value="{{$data->umur}}" class="form-control @if($errors->get('umur')) is-invalid @endif" name="umur" placeholder="Umur">
+                @if($errors->get('umur'))
+                    @foreach ($errors->get('umur') as $pesan)
+                        <div class="invalid-feedback">
+                            {{$pesan}}
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+        @else
+        @endif
         <p class="text-center">ALAMAT</p>
         <div class="form-group row">
             <label for="cono1" class="col-sm-3 text-right control-label col-form-label">RT</label>

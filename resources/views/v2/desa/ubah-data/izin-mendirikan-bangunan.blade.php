@@ -1,4 +1,5 @@
 <div class="card-body">
+    <input type="hidden" value="{{$data->id}}" name="id_berkas">
     <h4 class="card-title">Detail Permohonan</h4>
     <div class="form-group row">
         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Keperluan Bangunan</label>

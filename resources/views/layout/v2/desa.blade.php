@@ -177,9 +177,9 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark"
                                 href="{{route('desa-home')}}" aria-expanded="false"><i class="icon-Home"></i><span
                                     class="hide-menu">Beranda</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark"
+                        {{-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark"
                                 href="{{route('desa-formulir')}}" aria-expanded="false"><i
-                                    class="icon-Printer"></i><span class="hide-menu">Formulir</span></a></li>
+                                    class="icon-Printer"></i><span class="hide-menu">Formulir</span></a></li> --}}
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark"
                                 href="{{url('desa/v2/data-pemohon')}}" aria-expanded="false"><i
                                     class="icon-File"></i><span class="hide-menu">Data Pemohon</span></a></li>

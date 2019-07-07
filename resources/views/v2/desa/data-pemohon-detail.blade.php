@@ -54,12 +54,26 @@
                         </tr>
                     </tbody>
                 </table>
-                <p align="center"><a class="btn btn-info"
-                        href="{{url('desa/v2/data-pemohon/'.$slug.'/'.$item->slug)}}">Detail <i
-                            class="ti-arrow-right"></i></a></p>
+                <p class="text-center"><a href="#{{$item->slug}}" data-toggle="modal" class="btn btn-info">Informasi &nbsp;<i class="ti-info-alt"></i></a></p>
+               <p class="text-center"> <a href="{{route('formSublayanan-desa',[$pelayanan->slug,$item->slug])}}" class="btn btn-success">Formulir <i class="ti-pencil"></i></a></p>
+                <p align="center"><a class="btn btn-warning" href="{{url('desa/v2/data-pemohon/'.$slug.'/'.$item->slug)}}">Data Pemohon 
+                <i class="ti-file"></i></a></p>
             </div>
         </div>
     </div>
+    <div id="{{$item->slug}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="text-center modal-title">Informasi {{$pelayanan->pelayanan}} <br> ({{$item->subpelayanan}})</h4><br>
+                            {!!$pelayanan->keterangan!!}
+                            {!!$item->keterangan!!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endforeach
 </div>
 @endif

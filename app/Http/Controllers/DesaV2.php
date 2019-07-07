@@ -27,9 +27,12 @@ class DesaV2 extends Controller
     }
     public function formulir()
     {
+        // $pelayanan = Pelayanan::get();
+        $pemohon = Pemohon::where('daerah_id', session('daerah'))->get();
         $pelayanan = Pelayanan::get();
         $data = [
-            'pelayanan' => $pelayanan
+            'pelayanan' => $pelayanan,
+            'pemohon' => $pemohon
         ];
         return view('v2/desa/formulir', $data);
     }
@@ -401,10 +404,6 @@ class DesaV2 extends Controller
             'updated_at'   => null
         ]);
         $id_pemohon = $pemohon->id;
-        $a  =   $request->file('scan_ktp');
-        $b  =   $request->file('scan_pengantar');
-        $c  =   $request->file('scan_pernyataan_desa');
-        $d  =   $request->file('struktur_organisasi');
         $scan_ktp = Kustom::uploadBerkas($request->file('scan_ktp'),"atraksi-wisata","scan_ktp");
         $scan_pengantar = Kustom::uploadBerkas($request->file('scan_pengantar'),"atraksi-wisata","scan_pengantar");
         $scan_pernyataan_desa = Kustom::uploadBerkas($request->file('scan_pernyataan_desa'),"atraksi-wisata","scan_pernyataan_desa");
@@ -505,6 +504,10 @@ class DesaV2 extends Controller
     }
     public function UbahDetailPemohon($slug, $kode)
     {
+        $cek = Pemohon::where('kode',$kode)->first();
+        if($cek->status !="Belum"){
+            return redirect()->back();
+        }else{
         $dataDetail = DB::table("$slug")
             ->join('pemohons', 'pemohons.id', '=', "$slug.id_pemohon")
             ->join('daerahs', 'daerahs.id', '=', 'pemohons.daerah_id')
@@ -530,6 +533,7 @@ class DesaV2 extends Controller
                 'nama_reklame' => $reklame
             ];
         } else {
+           
             $data = [
                 'data' => $dataDetail,
                 'id_berkas' => $getID->id,
@@ -539,6 +543,7 @@ class DesaV2 extends Controller
             ];
         }
         return view('v2/desa/ubah-data-pemohon-1', $data);
+    }
     }
     public function DetailPemohonSub($slug,$kode)
     {
@@ -570,6 +575,11 @@ class DesaV2 extends Controller
     }
     public function UbahDetailPemohonSub($slug,$kode)
     {
+        $cek = Pemohon::where('kode',$kode)->first();
+        if($cek->status !="Belum" ){
+            return redirect()->back();
+
+        }else{
     $dataDetail = DB::table("$slug")
         ->join('pemohons', 'pemohons.id', '=', "$slug.id_pemohon")
         ->join('daerahs', 'daerahs.id', '=', 'pemohons.daerah_id')
@@ -595,4 +605,46 @@ class DesaV2 extends Controller
     
     return view('v2/desa/ubah-data-pemohon-2', $data);
     }
+}
+    public function UpdateData1($slug,$kode,Request $request)
+    {
+        $id_pemohon = Pemohon::where('kode',$kode)->first();
+        $cekBerkas =  DB::table("$slug")->where('id_pemohon',$id_pemohon->id)->first();
+        Pemohon::where('kode',$kode)->update([
+            'nama'  =>  $request['nama'],
+            'nik'   =>  $request['nik'],
+            'telepon'   =>  $request['telepon'],
+            'pekerjaan' =>  $request['pekerjaan'],
+            'rt'    =>  $request['rt'],
+            'rw'    =>  $request['rw'],
+            'jalan' =>  $request['jalan'],
+            'daerah_id'    =>  $request['daerah_id'],
+            'pelayanan_id'  => $request['pelayanan_id'],
+            'sublayanan_id' => $request['sublayanan_id'],
+            'updated_at'    =>  now(+7.00),
+        ]);
+        $data = $request->all();
+        $berkas = [
+            'scan_ktp' => $request->file('scan_ktp'),
+            'scan_persetujuan_tetangga' => $request->file('scan_persetujuan_tetangga'),
+            'scan_fc_kepemilikan_tanah' => $request->file('scan_fc_kepemilikan_tanah'),
+            'scan_fc_sppt_pbb_terakhir' => $request->file('scan_fc_sppt_pbb_terakhir'),
+            'scan_gambar_rencana' => $request->file('scan_gambar_rencana'),
+            'scan_pengantar'=> $request->file('scan_pengantar'),
+            'scan_npwp'         => $request->file('scan_npwp'),
+            'contoh_reklame'    => $request->file('contoh_reklame'),
+            'scan_persetujuan'  => $request->file('scan_persetujuan'),
+            'scan_kk'         => $request->file('scan_kk'),
+            'scan_izin_lama'    => $request->file('scan_izin_lama'),
+            'scan_pernyataan_desa'  =>$request->file('scan_pernyataan_desa'),
+            'struktur_organisasi'=>$request->file('struktur_organisasi'),
+            'foto'  => $request->file('foto')
+        ];
+        $method = "update_".str_replace('-','_',"$slug");
+        Kustom::$method($data,$id_pemohon->id,$slug,$cekBerkas,$berkas);
+        return redirect()->back()->with('sukses', "Ubah data formulir berhasil, mohon untuk menunggu informasi lebih lanjut");
+
+    }
+    
+    
 }

@@ -7,18 +7,14 @@
         $new = explode("/",$no);
     }
 @endphp
-@if($data->status == "Setuju" && $data->no_sk != null)
 @if(session('username') == "AdminKecamatan")
+@if($data->status == "Setuju" && $data->no_sk != null)
+
 <div class="card-body">
     <h3>
         <h3 class="text-center">Cetak surat <a href="">disini</a></h3>
     </h3>
 </div>
-@else
-<div class="card-body">
-    <h3 class="text-center">Surat siap dicetak</h3>
-</div>
-@endif
 @else
     <div class="card-body">
         <form action="{{route('add_nosk',[$id_berkas,$data->slug,$kode])}}" method="post">
@@ -40,7 +36,17 @@
         </form>
     </div>
 @endif
-
+@else
+@if($data->status == "Setuju" && $data->no_sk != null)
+<div class="card-body">
+    <h3 class="text-center">Surat siap dicetak</h3>
+</div>
+@else
+<div class="card-body">
+    <h3 class="text-center">Surat belum siap dicetak</h3>
+</div>
+@endif
+@endif
         <div class="card-body">
         <hr>
             <small class="text-muted">Nama Usaha</small>
@@ -54,6 +60,8 @@
             <a href="{{url("$data->scan_ktp")}}" class="btn btn-info btn-xs" target="_blank">Lihat</a>
             <h6>Scan Pengantar Izin Mendirikan Bangunan dari {{$data->jenis_daerah}} {{$data->nama_daerah}}</h6>
             <a href="{{url("$data->scan_pengantar")}}" class="btn btn-info btn-xs" target="_blank">Lihat</a>
+            <h6>Scan Pernyataan yang Diketahui  {{$data->jenis_daerah}} (Bermaterai)</h6>
+            <a href="{{url("$data->scan_pernyataan_desa")}}" class="btn btn-info btn-xs" target="_blank">Lihat</a>
         </div>
     </div>
 </div>

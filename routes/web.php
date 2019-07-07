@@ -89,7 +89,7 @@ Route::group(['middleware' => ['sesi']], function () {
     route::group(['prefix' => 'desa/v2/', 'middleware' => 'desa'], function () {
         route::get('/', 'DesaV2@index')->name('desa-home');
         route::get('/formulir', 'DesaV2@formulir')->name('desa-formulir');
-        route::get('/formulir/{slug}', 'DesaV2@formulirPelayanan')->name('formPelayanan-desa');
+        route::get('/formulir/{slug}', 'DesaV2@datapemohonDetail')->name('formPelayanan-desa');
         route::get('/formulir/{slug}/{slug2}', 'DesaV2@formulirSublayanan')->name('formSublayanan-desa');
 
         route::post('/formulir/izin-mendirikan-bangunan', 'DesaV2@formIMB')->name('form-izin-mendirikan-bangunan');
@@ -106,9 +106,13 @@ Route::group(['middleware' => ['sesi']], function () {
 
         route::get('/data-pemohon/{slug}/sub/{kode}/detail','DesaV2@DetailPemohonSub');
         route::get('/data-pemohon/{slug}/sub/{kode}/ubah','DesaV2@UbahDetailPemohonSub');
+        
 
         route::get('/data-pemohon/{slug}/{kode}/detail', 'DesaV2@DetailPemohon');
         route::get('/data-pemohon/{slug}/{kode}/ubah', 'DesaV2@UbahDetailPemohon');
+        route::post('/data-pemohon/{slug}/{kode}/ubah','DesaV2@UpdateData1')->name('ubahdata1');
+        // route::post('/update/formulir/izin-mendirikan-bangunan/{kode}','DesaV2@IMBupdate')->name('update-izin-mendirikan-bangunan');
+        // route::post('/update/formulir/izin-reklame/{kode}','DesaV2@IRupdate')->name('update-izin-reklame');
 
 
         route::get('/pengaturan-akun', 'DesaV2@pengaturanAkun')->name('akunDaerah');
