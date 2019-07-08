@@ -24,7 +24,7 @@ Route::get('/layanan/{slug1}/{slug2}', 'ApiAll@dataSublayanan');
 
 Route::get('/pelayananlistV2', 'ApiAll@pelayananV2');
 
-
+Route::get('/pelayanan','ApiAll@allData')->name('getData');
 Route::get('/pelayanan/v2/{slug}', 'ApiAll@dataLayananV2')->name('api-pelayanan');
 Route::get('/sublayanan/v2/{slug}', 'ApiAll@dataSublayananV2')->name('api-sublayanan');
 Route::get('/pelayanan/desa/v2/{slug}/{desa}', 'ApiAll@dataLayananV2Desa')->name('api-pelayanan-desa');

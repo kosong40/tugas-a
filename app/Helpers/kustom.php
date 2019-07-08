@@ -423,4 +423,8 @@ class kustom
             ]);
         }
     }
+    public static function getData($i)
+    {
+        return count(DB::table("pemohons")->whereDate('created_at', DB::raw("CURDATE()+$i"))->get());
+    }
 }

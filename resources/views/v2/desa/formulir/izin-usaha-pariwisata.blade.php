@@ -6,21 +6,43 @@
     <li class="breadcrumb-item active" aria-current="page">{{$pelayanan->pelayanan}}</li>
 @endsection
 @section('content')
-<div class="card-group">
+<div class="row">
     @foreach ($sublayanan->where('id_pelayanan',"$pelayanan->id") as $sublayanan)
-    <div class="card">
-        <div class="card-header">
-            Pelayanan
+    <div class="col-sm-12 col-lg-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{$item->subpelayanan}}</h5>
+                    <table class="table no-border mini-table m-t-20">
+                        <tbody>
+                            <tr>
+                                <td class="text-muted">Total</td>
+                                <td class="font-medium">{{count($pemohon->where('sublayanan_id',$item->id))}}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Siap Dicetak</td>
+                                <td class="font-medium">
+                                    {{count($pemohon->where('sublayanan_id',$item->id)->where('status','Setuju'))}}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Sudah ada No SK</td>
+                                <td class="font-medium">
+                                    {{count($pemohon->where('sublayanan_id',$item->id)->where('status','Sudah ada nomor SK'))}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Belum ada No SK</td>
+                                <td class="font-medium">
+                                    {{count($pemohon->where('sublayanan_id',$item->id)->where('status','Belum'))}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-center"><a href="#{{$item->slug}}" data-toggle="modal" class="btn btn-info">Informasi &nbsp;<i class="ti-info-alt"></i></a></p>
+                   <p class="text-center"> <a href="{{route('formSublayanan-desa',[$pelayanan->slug,$item->slug])}}" class="btn btn-success">Formulir <i class="ti-pencil"></i></a></p>
+                    <p align="center"><a class="btn btn-warning" href="{{url('desa/v2/data-pemohon/'.$slug.'/'.$item->slug)}}">Data Pemohon 
+                    <i class="ti-file"></i></a></p>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-        <center>
-            <h4 class="card-title">{{$sublayanan->subpelayanan}}</h4>
-            <br><br>
-            <a href="#{{$sublayanan->slug}}" data-toggle="modal" class="btn btn-info btn-sm">Informasi</a>
-            <a href="{{route('formSublayanan-desa',[$pelayanan->slug,$sublayanan->slug])}}" class="btn btn-success btn-sm">Formulir</a>
-        </center>
-        </div>
-    </div>
     <div id="{{$sublayanan->slug}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">

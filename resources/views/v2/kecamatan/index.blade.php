@@ -102,30 +102,53 @@ switch (date("l")) {
     </div> <!-- end card group-->
     <div class="row">
         <!-- Column -->
-        <div class="col-md-12 col-lg-12">
+        <div class="col-md-7 col-lg-7">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
-                            <h4 class="card-title">Product Sales</h4>
-                            <h5 class="card-subtitle">Overview of Latest Month</h5>
+                            <h4 class="card-title">Data Masuk 7 Hari Terakhir</h4>
                         </div>
                         <div class="ml-auto">
                             <ul class="list-inline font-12 dl m-r-10">
                                 <li class="list-inline-item">
-                                    <i class="fas fa-dot-circle text-info"></i> Ipad
+                                    <i class="fas fa-dot-circle text-info"></i> Data Masuk
                                 </li>
-                                <li class="list-inline-item">
-                                    <i class="fas fa-dot-circle text-danger"></i> Iphone</li>
                             </ul>
                         </div>
                     </div>
-                    <div id="product-sales" style="height:300px"></div>
+                    <div id="data-masuk" style="height:400px"></div>
                 </div>
             </div>
-
+        </div> 
+        <div class="col-md-5 col-lg-5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h4 class="card-title">Data Masuk Terbaru</h4>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                        <table id="pelayanan" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nama Pemohon</th>
+                                    <th>Pelayanan</th>
+                                    <th>Masuk</th>
+                                    <th>Lihat</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+@endsection
+@section('css')
+<link href="{{url('adminbite/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
 @endsection
 @section('js')
     <script>
@@ -144,5 +167,56 @@ switch (date("l")) {
             if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
             return i;
         }
+    </script>
+    <!--chartjs -->
+    <script src="{{url('adminbite/assets/libs/raphael/raphael.min.js')}}"></script>
+    <script src="{{url('adminbite/assets/libs/morris.js/morris.min.js')}}"></script>
+    <script>
+    $(function() {
+        'use strict';
+        Morris.Bar({
+            element: 'data-masuk',
+            
+            data: [
+            @for($i=-6;$i<1;$i++)
+                {
+                    period: '{{date("d-M-Y",strtotime("+$i day"))}}',
+                    'data masuk' : {{Kustom::getData($i)}},
+                },
+            @endfor
+
+            ],
+            xkey: 'period',
+            ykeys: ['data masuk'],
+            labels: ['data masuk'],
+            pointSize: 2,
+            fillOpacity: 0,
+            pointStrokeColors: ['#ccc', '#4798e8', '#9675ce'],
+            behaveLikeLine: true,
+            gridLineColor: '#e0e0e0',
+            lineWidth: 2,
+            hideHover: 'auto',
+            lineColors: ['#ccc', '#4798e8', '#9675ce'],
+            resize: true
+        });
+    });
+    </script>
+    <script src="{{url('adminbite/assets/extra-libs/DataTables/datatables.min.js')}}"></script>
+    <script>
+        $('#pelayanan').DataTable({
+        "processing"    :true,
+        "serverSide"    :true,
+        "scrollY"       : "279px",
+        "scrollCollapse": true,
+        "paging": false,
+        "ajax"          : "{{route('getData')}}",
+        "columns"       :[
+                {"data" : "nama"},
+                {"data" : "pelayanane"},
+                {'data' : 'created_at'},
+                {"data" : "action","orderable": false, "searchable": false}
+        ]
+    });
+    
     </script>
 @endsection

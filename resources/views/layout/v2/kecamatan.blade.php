@@ -195,17 +195,7 @@
     <script src="{{url('adminbite/dist/js/sidebarmenu.js')}}"></script>
     <!--Custom JavaScript -->
     <script src="{{url('adminbite/dist/js/custom.min.js')}}"></script>
-    <!--chartis chart-->
-    <script src="{{url('adminbite/assets/libs/chartist/dist/chartist.min.js')}}"></script>
-    <script src="{{url('adminbite/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js')}}"></script>
-    <!--c3 charts -->
-    <script src="{{url('adminbite/assets/extra-libs/c3/d3.min.js')}}"></script>
-    <script src="{{url('adminbite/assets/extra-libs/c3/c3.min.js')}}"></script>
-    <!--chartjs -->
-    <script src="{{url('adminbite/assets/libs/raphael/raphael.min.js')}}"></script>
-    <script src="{{url('adminbite/assets/libs/morris.js/morris.min.js')}}"></script>
-
-    <script src="{{url('adminbite/dist/js/pages/dashboards/dashboard1.js')}}"></script>
+    
     @yield('js')
 </body>
 

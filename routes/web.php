@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,13 +14,7 @@ use Illuminate\Support\Facades\Cookie;
 */
 
 Route::get('/testing', function () {
-    return view('testing');
-    // dd(Cookie::get('laravel_session'));
-    // $string = "ABCDEFGHIJKLMNOPQRETUVWXYZabcdefghijklmnopqrstuwvxyz1234567890";
-    // $acak = substr(str_shuffle($string),0,16);
-    // dd(substr("RUHGOAEw1bI2MZyV1",16,16));
-    // dd($acak);
-    // return view('surat/dispensasi-nikah');
+  return "INI TESTING";
 });
 Route::get('/tes', 'KecamatanV2@cek');
 Route::post('/testing/upload', 'AdminController@testing');
@@ -89,7 +84,7 @@ Route::group(['middleware' => ['sesi']], function () {
     route::group(['prefix' => 'desa/v2/', 'middleware' => 'desa'], function () {
         route::get('/', 'DesaV2@index')->name('desa-home');
         route::get('/formulir', 'DesaV2@formulir')->name('desa-formulir');
-        route::get('/formulir/{slug}', 'DesaV2@datapemohonDetail')->name('formPelayanan-desa');
+        route::get('/formulir/{slug}', 'DesaV2@formulirPelayanan')->name('formPelayanan-desa');
         route::get('/formulir/{slug}/{slug2}', 'DesaV2@formulirSublayanan')->name('formSublayanan-desa');
 
         route::post('/formulir/izin-mendirikan-bangunan', 'DesaV2@formIMB')->name('form-izin-mendirikan-bangunan');

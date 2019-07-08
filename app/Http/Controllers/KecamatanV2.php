@@ -19,7 +19,8 @@ class KecamatanV2 extends Controller
 {
     public function home()
     {
-
+        $tgl = date('Y-m-d');
+        // dd(Pemohon::where('created_at','like',"$tgl%")->get());
         $dataMasuk  = count(DB::table("pemohons")->whereDate('created_at', DB::raw('CURDATE()'))->get());
         $dataTotal  = count(DB::table('pemohons')->get());
         $pelayanan  = Pelayanan::get();
@@ -27,7 +28,8 @@ class KecamatanV2 extends Controller
         $data = [
             'hari_ini'  =>  $dataMasuk,
             'total'     =>  $dataTotal,
-            'pelayanan' => count($pelayanan)
+            'pelayanan' => count($pelayanan),
+            'tabelData' => Pemohon::get()
         ];
         return view('v2/kecamatan/index', $data);
     }

@@ -119,6 +119,36 @@ class ApiAll extends Controller
 
 
     // v2
+
+    //LAYANAN TERBARU
+    public function allData()
+    {
+        $layanan = DB::table('pemohons')
+        ->join('pelayanans', 'pelayanans.id', '=', 'pemohons.pelayanan_id')
+        ->leftJoin('sublayanans', 'sublayanans.id', '=', 'pemohons.sublayanan_id')
+        ->orderBy('pemohons.created_at', 'desc')
+        ->where('status',"Belum")
+        ->select(['pemohons.nama','pelayanans.pelayanan','pemohons.created_at','pelayanans.slug','sublayanans.subpelayanan','sublayanans.slug as slug2'])
+        ->get();
+        return DataTables::of($layanan)
+        ->addColumn('action', function ($data) {
+            
+            if($data->slug2 == null){
+                return '<a class="btn btn-info btn-sm" href=' . url('/kecamatan/v2/data-layanan') . '/' .$data->slug.'>Lihat </a>';
+            }else{
+                return '<a class="btn btn-info btn-sm" href=' . url('/kecamatan/v2/data-layanan') . '/' .$data->slug.'/'.$data->slug2.'>Lihat </a>';
+            }
+        })
+        ->addColumn('pelayanane',function($data){
+            if($data->slug2 == null){
+                return "$data->pelayanan";
+            }else{
+                return "$data->pelayanan ($data->subpelayanan)";
+            }
+        })
+        ->rawColumns(['action','pelayanane'])
+        ->make(true);
+    }
     // DATA LAYANAN
 
 

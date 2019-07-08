@@ -41,7 +41,7 @@ class DesaV2 extends Controller
         $pelayanan      = Pelayanan::where('slug', $slug)->first();
         $daerah         = Daerah::find(session('daerah'));
         $reklame        = DB::table('jenis-reklame')->get();
-
+        $pemoho = Pemohon::where('daerah_id', session('daerah'))->get();
         $sublayanan     =   Sublayanan::get();
         $data =
             [
@@ -49,9 +49,12 @@ class DesaV2 extends Controller
                 'daerah' => $daerah,
                 'reklame' => $reklame,
                 'sublayanan' => $sublayanan,
+                'pemohon'=>$pemoho,
+                'slug' => $slug,
                 'cek' => count(Sublayanan::where('id_pelayanan', $pelayanan->id)->get()),
             ];
         return view('v2/desa/formulir-pelayanan', $data);
+        // return view('v2/desa/data-pemohon-detail', $data);
     }
     public function formulirSublayanan($slug, $slug2)
     {
