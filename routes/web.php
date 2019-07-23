@@ -128,6 +128,7 @@ Route::group(['middleware' => ['sesi']], function () {
 
         route::get('/admin-desa', 'KecamatanV2@adminDesa');
         route::post('/add-nosk/{id}/{slug}/{kode}', 'KecamatanV2@addNoSK')->name('add_nosk');
+        route::post('/revisi/{id}/{slug}/{kode}','KecamatanV2@revForm')->name('rev_formulir');
         route::get('/setujuForm/{id}/{slug}/{kode}', 'KecamatanV2@SetujuKec')->name('setujuForm');
 
         route::get('/pengaturan-akun', 'KecamatanV2@pengaturanAkunKec')->name('pengaturanAkunKec');

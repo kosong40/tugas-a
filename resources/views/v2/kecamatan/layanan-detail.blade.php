@@ -53,7 +53,15 @@
                     @endif
                     <h4 class="card-title m-t-10">Pelayanan <br> {{$data->pelayanan}}</h4>
                     @if ($data->no_sk ==null)
-                        
+                        <p id="revisi" class="btn btn-danger">Perbaiki Berkas</p>
+                    <form action="{{route('rev_formulir',[$id_berkas,$data->slug,$kode])}}" method="POST" id="form-revisi">
+                            @csrf
+                            <div class="form-group">
+                                <label for="" class="label-control">Catatan</label>
+                                <textarea name="catatan" class="form-control">{{$data->pesan}}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-danger">Proses</button>
+                        </form>
                     @else
                         <small class="text-muted">Nomor Surat Keputusan</small>
                         <h6>{{$data->no_sk}}</h6>
@@ -96,10 +104,14 @@
 @section('js')
 <script>
     $(function(){
+        $("#form-revisi").hide(true);
         $("#sst").click(function(){
             $("#setuju").modal({
                 show:true
             })
+        });
+        $("#revisi").click(function(){
+            $("#form-revisi").show(true);
         });
         $("#se7").click(function(){
             window.location.href = "{{route('setujuForm',[$id_berkas,$data->slug,$kode])}}"

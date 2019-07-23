@@ -34,6 +34,11 @@
                             <td class="font-medium">
                                 {{count($pemohon->where('pelayanan_id',$pelayanan->id)->where('status','Belum'))}}</td>
                         </tr>
+                        <tr>
+                            <td class="text-muted">Revisi Berkas</td>
+                            <td class="font-medium">
+                                {{count($pemohon->where('pelayanan_id',$pelayanan->id)->where('status','Revisi'))}}</td>
+                        </tr>
                     </tbody>
                 </table>
                 <p align="center"><a class="btn btn-info"

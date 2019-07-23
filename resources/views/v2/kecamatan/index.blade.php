@@ -30,7 +30,7 @@ switch (date("l")) {
 	default:$hari = date("l");break;
 }
 @endphp
-<div class="card-group"> <!-- card group -->
+    <div class="card-group"> <!-- card group -->
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -98,16 +98,15 @@ switch (date("l")) {
                 </div>
             </div>
         </div>
-
     </div> <!-- end card group-->
     <div class="row">
         <!-- Column -->
-        <div class="col-md-7 col-lg-7">
+        <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
-                            <h4 class="card-title">Data Masuk 7 Hari Terakhir</h4>
+                            <h4 class="card-title">Jumlah Data Masuk 7 Hari Terakhir</h4>
                         </div>
                         <div class="ml-auto">
                             <ul class="list-inline font-12 dl m-r-10">
@@ -117,33 +116,67 @@ switch (date("l")) {
                             </ul>
                         </div>
                     </div>
-                    <div id="data-masuk" style="height:400px"></div>
+                    <div id="data-masuk" style="height:425px"></div>
                 </div>
             </div>
         </div> 
-        <div class="col-md-5 col-lg-5">
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h4 class="card-title">Data Masuk Terbaru</h4>
+                        </div>
+                    </div>
+                        <div class="table-responsive">
+                            <table id="pelayanan" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Pemohon</th>
+                                        <th>Pelayanan</th>
+                                        <th>Masuk</th>
+                                        <th>Lihat</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <h4 class="card-title">Data Masuk Terbaru</h4>
+                                <h4 class="card-title">Data Siap Cetak</h4>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                        <table id="pelayanan" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Nama Pemohon</th>
-                                    <th>Pelayanan</th>
-                                    <th>Masuk</th>
-                                    <th>Lihat</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+                            <div class="table-responsive">
+                                <table id="SiapCetak" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Pemohon</th>
+                                            <th>Pelayanan</th>
+                                            <th>Disetujui</th>
+                                            <th>Lihat</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h4 class="card-title">Data Masuk Berdasarkan Desa Kelurahan</h4>
+                    </div>
+                </div>
+            <div id="data-desa" style="height:425px"></div>
         </div>
     </div>
 @endsection
@@ -171,6 +204,7 @@ switch (date("l")) {
     <!--chartjs -->
     <script src="{{url('adminbite/assets/libs/raphael/raphael.min.js')}}"></script>
     <script src="{{url('adminbite/assets/libs/morris.js/morris.min.js')}}"></script>
+    {{-- script chart data masuk 7 hari --}}
     <script>
     $(function() {
         'use strict';
@@ -201,9 +235,37 @@ switch (date("l")) {
         });
     });
     </script>
+    <script>
+    $(function(){
+        Morris.Bar({
+            element :'data-desa',
+            data: [
+            @foreach($daerah as $daerah)
+                {
+                    daerah: "{{$daerah->nama_daerah}}",
+                    "total data" :{{count($dataPemohon->where('daerah_id',$daerah->id))}},
+                },
+            @endforeach
+
+            ],
+            xkey: 'daerah',
+            ykeys: ['total data'],
+            labels: ['total data'],
+            pointSize: 2,
+            fillOpacity: 0,
+            pointStrokeColors: ['#ccc', '#4798e8', '#9675ce'],
+            behaveLikeLine: true,
+            gridLineColor: '#e0e0e0',
+            lineWidth: 2,
+            hideHover: 'auto',
+            lineColors: ['#ccc', '#4798e8', '#9675ce'],
+            resize: true
+        });
+    });
+    </script>
     <script src="{{url('adminbite/assets/extra-libs/DataTables/datatables.min.js')}}"></script>
     <script>
-        $('#pelayanan').DataTable({
+    $('#pelayanan').DataTable({
         "processing"    :true,
         "serverSide"    :true,
         "scrollY"       : "279px",
@@ -217,6 +279,21 @@ switch (date("l")) {
                 {"data" : "action","orderable": false, "searchable": false}
         ]
     });
-    
+    </script>
+    <script>
+        $('#SiapCetak').DataTable({
+        "processing"    :true,
+        "serverSide"    :true,
+        "scrollY"       : "279px",
+        "scrollCollapse": true,
+        "paging": false,
+        "ajax"          : "{{route('getDataCetak')}}",
+        "columns"       :[
+                {"data" : "nama"},
+                {"data" : "pelayanane"},
+                {'data' : 'updated_at'},
+                {"data" : "action","orderable": false, "searchable": false}
+        ]
+    });
     </script>
 @endsection

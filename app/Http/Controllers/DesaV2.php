@@ -20,8 +20,15 @@ class DesaV2 extends Controller
     public function index()
     {
         $totalPemohon = DB::table('pemohons')->where('daerah_id', session('daerah'))->get();
+        $pel = Pelayanan::Leftjoin('sublayanans','sublayanans.id_pelayanan','=','pelayanans.id')
+        ->select(['pelayanans.id as id1','sublayanans.id as id2','pelayanans.pelayanan as pelayanan1','sublayanans.subpelayanan as pelayanan2'])
+        ->get();
+        // dd($pel);
+        $pemohon = DB::table('pemohons')->where('daerah_id', session('daerah'))->get();
         $data = [
-            'totalPemohon' => count($totalPemohon)
+            'totalPemohon' => count($totalPemohon),
+            'pelayanan' => $pel,
+            'pemohon' => $pemohon
         ];
         return view('v2/desa/index', $data);
     }
@@ -508,7 +515,7 @@ class DesaV2 extends Controller
     public function UbahDetailPemohon($slug, $kode)
     {
         $cek = Pemohon::where('kode',$kode)->first();
-        if($cek->status !="Belum"){
+        if($cek->status !="Revisi"){
             return redirect()->back();
         }else{
         $dataDetail = DB::table("$slug")
@@ -579,7 +586,7 @@ class DesaV2 extends Controller
     public function UbahDetailPemohonSub($slug,$kode)
     {
         $cek = Pemohon::where('kode',$kode)->first();
-        if($cek->status !="Belum" ){
+        if($cek->status !="Revisi" ){
             return redirect()->back();
 
         }else{
@@ -624,6 +631,7 @@ class DesaV2 extends Controller
             'daerah_id'    =>  $request['daerah_id'],
             'pelayanan_id'  => $request['pelayanan_id'],
             'sublayanan_id' => $request['sublayanan_id'],
+            'status' => 'Belum',
             'updated_at'    =>  now(+7.00),
         ]);
         $data = $request->all();
@@ -644,8 +652,17 @@ class DesaV2 extends Controller
             'foto'  => $request->file('foto')
         ];
         $method = "update_".str_replace('-','_',"$slug");
+        DB::table("$slug")->where('id_pemohon',$id_pemohon->id)->update([
+            'pesan'=>null
+        ]);
         Kustom::$method($data,$id_pemohon->id,$slug,$cekBerkas,$berkas);
-        return redirect()->back()->with('sukses', "Ubah data formulir berhasil, mohon untuk menunggu informasi lebih lanjut");
+        if( $request['sublayanan_id'] == null){
+            return redirect("desa/v2/data-pemohon/$slug");
+        }else{
+            $pela = Pelayanan::find($request['pelayanan_id']);
+            return redirect("desa/v2/data-pemohon/$pela->slug/$slug");
+        }
+        
 
     }
     

@@ -64,6 +64,66 @@ default:$hari = date("l");break;
         </div>
     </div>
 </div>
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <div>
+                <h4 class="card-title">Data Masuk Berdasarkan Pelayanan</h4>
+            </div>
+        </div>
+    <div id="data-pelayanan" style="height:425px"></div>
+</div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h4 class="card-title">Data Siap Cetak</h4>
+                    </div>
+                </div>
+                    <div class="table-responsive">
+                        <table id="SiapCetak" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nama Pemohon</th>
+                                    <th>Pelayanan</th>
+                                    <th>Disetujui</th>
+                                    <th>Lihat</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h4 class="card-title">Daftar Revisi</h4>
+                    </div>
+                </div>
+                    <div class="table-responsive">
+                        <table id="RevisiData" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nama Pemohon</th>
+                                    <th>Pelayanan</th>
+                                    <th>Direvisi</th>
+                                    <th>Lihat</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('js')
 <script>
@@ -83,7 +143,80 @@ default:$hari = date("l");break;
             return i;
         }
 </script>
+<script src="{{url('adminbite/assets/extra-libs/DataTables/datatables.min.js')}}"></script>
+<script>
+    $('#SiapCetak').DataTable({
+    "processing"    :true,
+    "serverSide"    :true,
+    "scrollY"       : "279px",
+    "scrollCollapse": true,
+    "paging": false,
+    "ajax"          : "{{route('getDataCetakDesa',session('daerah'))}}",
+    "columns"       :[
+            {"data" : "nama"},
+            {"data" : "pelayanane"},
+            {'data' : 'updated_at'},
+            {"data" : "action","orderable": false, "searchable": false}
+    ]
+});
+</script>
+<script>
+    $('#RevisiData').DataTable({
+    "processing"    :true,
+    "serverSide"    :true,
+    "scrollY"       : "279px",
+    "scrollCollapse": true,
+    "paging": false,
+    "ajax"          : "{{route('getDataRevisi',session('daerah'))}}",
+    "columns"       :[
+            {"data" : "nama"},
+            {"data" : "pelayanane"},
+            {'data' : 'updated_at'},
+            {"data" : "action","orderable": false, "searchable": false}
+    ]
+});
+</script>
+<script src="{{url('adminbite/assets/libs/raphael/raphael.min.js')}}"></script>
+<script src="{{url('adminbite/assets/libs/morris.js/morris.min.js')}}"></script>
+<script>
+        $(function() {
+            'use strict';
+            Morris.Bar({
+                element: 'data-pelayanan',
+                
+                data: [
+               @foreach($pelayanan as $pelayanan)
+                    {
+                        @if($pelayanan->pelayanan2 == null)
+                            pelayanan:'{{$pelayanan->pelayanan1}}',
+                            'data masuk' : {{count($pemohon->where('pelayanan_id',$pelayanan->id1))}},
+                        @else
+                            pelayanan:'{{$pelayanan->pelayanan2}}',
+                            'data masuk' : {{count($pemohon->where('sublayanan_id',$pelayanan->id2))}},
+                        @endif
+                    },
+                @endforeach
+    
+                ],
+                xkey: 'pelayanan',
+                ykeys: ['data masuk'],
+                labels: ['data masuk'],
+                pointSize: 2,
+                fillOpacity: 0,
+                pointStrokeColors: ['#ccc', '#4798e8', '#9675ce'],
+                behaveLikeLine: true,
+                gridLineColor: '#e0e0e0',
+                lineWidth: 2,
+                hideHover: 'auto',
+                lineColors: ['#ccc', '#4798e8', '#9675ce'],
+                resize: true
+            });
+        });
+        </script>
 @endsection
 @section('breadcrumb')
 <li class="breadcrumb-item active" aria-current="page">Beranda</li>
+@endsection
+@section('css')
+<link href="{{url('adminbite/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
 @endsection

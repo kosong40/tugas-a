@@ -52,6 +52,11 @@
                             <td class="font-medium">
                                 {{count($pemohon->where('sublayanan_id',$item->id)->where('status','Belum'))}}</td>
                         </tr>
+                        <tr>
+                            <td class="text-muted">Revisi Berkas</td>
+                            <td class="font-medium">
+                                {{count($pemohon->where('sublayanan_id',$item->id)->where('status','Revisi'))}}</td>
+                        </tr>
                     </tbody>
                 </table>
                 <p class="text-center"><a href="#{{$item->slug}}" data-toggle="modal" class="btn btn-info">Informasi &nbsp;<i class="ti-info-alt"></i></a></p>

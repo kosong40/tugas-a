@@ -167,7 +167,10 @@ class ApiAll extends Controller
                     return '<label class="label label-success"> Siap dicetak <i class="fa fa-print"></i> </label>';
                 } elseif ($data->status == "Belum") {
                     return '<label class="label label-danger"> ' . $data->status . ' <i class="fa fa-spinner"></i> </label>';
-                } else {
+                }elseif($data->status == "Revisi"){
+                    return '<label class="label label-danger"> ' . $data->status . ' <i class="fa fa-cog"></i> </label>';
+                }
+                else {
                     return '<label class="label label-warning"> Sudah ada Nomor SK <i class="fa fa-check"></i> </label>';
                 }
             })
@@ -205,6 +208,8 @@ class ApiAll extends Controller
                     return '<label class="label label-success"> Siap dicetak <i class="fa fa-print"></i> </label>';
                 } elseif ($data->status == "Belum") {
                     return '<label class="label label-danger"> ' . $data->status . ' <i class="fa fa-spinner"></i> </label>';
+                }elseif($data->status == "Revisi"){
+                    return '<label class="label label-danger"> ' . $data->status . ' <i class="fa fa-cog"></i> </label>';
                 } else {
                     return '<label class="label label-warning"> Sudah ada Nomor SK <i class="fa fa-check"></i> </label>';
                 }
@@ -265,15 +270,18 @@ class ApiAll extends Controller
                     return '<label class="label label-success"> Siap dicetak <i class="fa fa-print"></i> </label>';
                 } elseif ($data->status == "Belum") {
                     return '<label class="label label-danger"> ' . $data->status . ' <i class="fa fa-spinner"></i> </label>';
-                } else {
+                }elseif($data->status == "Revisi"){
+                    return '<label class="label label-danger"> ' . $data->status . ' <i class="fa fa-cog"></i> </label>';
+                }
+                 else {
                     return '<label class="label label-warning"> Sudah ada Nomor SK <i class="fa fa-check"></i> </label>';
                 }
             })
             ->addColumn('action', function ($data) {
 
-                if ($data->status != "Belum") {
+                if ($data->status != "Revisi") {
                     return '<a class="btn btn-success btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' . $data->slug . '/' . $data->kode .  '/detail' . '>Detail </a>';
-                } elseif ($data->status == "Belum") {
+                } elseif ($data->status == "Revisi") {
                     return '
                     <a class="btn btn-warning btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' . $data->slug . '/' . $data->kode .  '/ubah' . '>Ubah Data </a>
                     <a class="btn btn-success btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' . $data->slug . '/' . $data->kode .  '/detail' . '>Detail </a>
@@ -307,14 +315,17 @@ class ApiAll extends Controller
                     return '<label class="label label-success"> Siap dicetak <i class="fa fa-print"></i> </label>';
                 } elseif ($data->status == "Belum") {
                     return '<label class="label label-danger"> ' . $data->status . ' <i class="fa fa-refresh"></i> </label>';
+                }
+                elseif($data->status == "Revisi"){
+                    return '<label class="label label-danger"> ' . $data->status . ' <i class="fa fa-cog"></i> </label>';
                 } else {
                     return '<label class="label label-warning"> Sudah ada Nomor SK <i class="fa fa-check"></i> </label>';
                 }
             })
             ->addColumn('action', function ($data) {
-                if ($data->status != "Belum") {
+                if ($data->status != "Revisi") {
                     return '<a class="btn btn-success btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' . $data->slug . '/sub/' . $data->kode .  '/detail' . '>Detail </a>';
-                } elseif ($data->status == "Belum") {
+                } elseif ($data->status == "Revisi") {
                     return '
                     <a class="btn btn-warning btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' . $data->slug . '/sub/' . $data->kode .  '/ubah' . '>Ubah Data </a>
                     <a class="btn btn-success btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' . $data->slug . '/sub/' . $data->kode .  '/detail' . '>Detail </a>
@@ -324,5 +335,91 @@ class ApiAll extends Controller
             ->addIndexColumn()
             ->rawColumns(['status', 'action'])
             ->make(true);
+    }
+    public function DataCetak()
+    {
+        $layanan = DB::table('pemohons')
+        ->join('pelayanans', 'pelayanans.id', '=', 'pemohons.pelayanan_id')
+        ->leftJoin('sublayanans', 'sublayanans.id', '=', 'pemohons.sublayanan_id')
+        ->orderBy('pemohons.created_at', 'desc')
+        ->where('status',"Setuju")
+        ->select(['pemohons.nama','pelayanans.pelayanan','pemohons.updated_at','pelayanans.slug','sublayanans.subpelayanan','sublayanans.slug as slug2'])
+        ->get();
+        return DataTables::of($layanan)
+        ->addColumn('action', function ($data) {
+            
+            if($data->slug2 == null){
+                return '<a class="btn btn-success btn-sm" href=' . url('/kecamatan/v2/data-layanan') . '/' .$data->slug.'>Cetak </a>';
+            }else{
+                return '<a class="btn btn-success btn-sm" href=' . url('/kecamatan/v2/data-layanan') . '/' .$data->slug.'/'.$data->slug2.'>Cetak </a>';
+            }
+        })
+        ->addColumn('pelayanane',function($data){
+            if($data->slug2 == null){
+                return "$data->pelayanan";
+            }else{
+                return "$data->pelayanan ($data->subpelayanan)";
+            }
+        })
+        ->rawColumns(['action','pelayanane'])
+        ->make(true);
+    }
+    public function DataCetakDesa($desa)
+    {
+        $layanan = DB::table('pemohons')
+        ->join('pelayanans', 'pelayanans.id', '=', 'pemohons.pelayanan_id')
+        ->leftJoin('sublayanans', 'sublayanans.id', '=', 'pemohons.sublayanan_id')
+        ->orderBy('pemohons.created_at', 'desc')
+        ->where('status',"Setuju")
+        ->where('pemohons.daerah_id',"$desa")
+        ->select(['pemohons.nama','pelayanans.pelayanan','pemohons.updated_at','pelayanans.slug','sublayanans.subpelayanan','sublayanans.slug as slug2'])
+        ->get();
+        return DataTables::of($layanan)
+        ->addColumn('action', function ($data) {
+            
+            if($data->slug2 == null){
+                return '<a class="btn btn-success btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' .$data->slug.'>Detail </a>';
+            }else{
+                return '<a class="btn btn-success btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' .$data->slug.'/'.$data->slug2.'>Detail </a>';
+            }
+        })
+        ->addColumn('pelayanane',function($data){
+            if($data->slug2 == null){
+                return "$data->pelayanan";
+            }else{
+                return "$data->pelayanan ($data->subpelayanan)";
+            }
+        })
+        ->rawColumns(['action','pelayanane'])
+        ->make(true);
+    }
+    public function DataRevisiDesa($desa)
+    {
+        $layanan = DB::table('pemohons')
+        ->join('pelayanans', 'pelayanans.id', '=', 'pemohons.pelayanan_id')
+        ->leftJoin('sublayanans', 'sublayanans.id', '=', 'pemohons.sublayanan_id')
+        ->orderBy('pemohons.created_at', 'desc')
+        ->where('status',"Revisi")
+        ->where('pemohons.daerah_id',"$desa")
+        ->select(['pemohons.nama','pelayanans.pelayanan','pemohons.updated_at','pelayanans.slug','sublayanans.subpelayanan','sublayanans.slug as slug2'])
+        ->get();
+        return DataTables::of($layanan)
+        ->addColumn('action', function ($data) {
+            
+            if($data->slug2 == null){
+                return '<a class="btn btn-danger btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' .$data->slug.'>Detail </a>';
+            }else{
+                return '<a class="btn btn-danger btn-sm" href=' . url('/desa/v2/data-pemohon') . '/' .$data->slug.'/'.$data->slug2.'>Detail </a>';
+            }
+        })
+        ->addColumn('pelayanane',function($data){
+            if($data->slug2 == null){
+                return "$data->pelayanan";
+            }else{
+                return "$data->pelayanan ($data->subpelayanan)";
+            }
+        })
+        ->rawColumns(['action','pelayanane'])
+        ->make(true);
     }
 }

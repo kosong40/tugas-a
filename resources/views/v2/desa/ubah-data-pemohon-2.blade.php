@@ -13,6 +13,10 @@
     @csrf
     <div class="card-body">
         <h4 class="card-title">Informasi Pemohon</h4>
+        <div class="alert alert-warning">
+                <h5><i class="icon fa fa-ban"></i> Revisi</h5>
+                <p>{{$data->pesan}}</p>
+            </div>
         @if (session('sukses'))
         <div class="alert alert-success">
             <p style="margin:0" class="text-center">{{session('sukses')}}</p>

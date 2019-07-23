@@ -25,11 +25,14 @@ class KecamatanV2 extends Controller
         $dataTotal  = count(DB::table('pemohons')->get());
         $pelayanan  = Pelayanan::get();
         $daerah     = Daerah::where('nama_daerah', '<>', 'Pemalang')->get();
+        $dataPemohon = Pemohon::get();
         $data = [
             'hari_ini'  =>  $dataMasuk,
             'total'     =>  $dataTotal,
             'pelayanan' => count($pelayanan),
-            'tabelData' => Pemohon::get()
+            'tabelData' => Pemohon::get(),
+            'daerah' => $daerah,
+            'dataPemohon' => $dataPemohon
         ];
         return view('v2/kecamatan/index', $data);
     }
@@ -218,6 +221,19 @@ class KecamatanV2 extends Controller
             'updated_at' => now(+7.00)
         ]);
         return redirect()->back()->with('sukses', 'Permohonan disetujui');
+    }
+    public function revForm(Request $request,$id, $slug, $kode)
+    {
+        // dd($request->all());
+        DB::table("$slug")->where('id', $id)
+            ->update([
+                'pesan' => "$request->catatan",
+            ]);
+        Pemohon::where('kode', $kode)->update([
+            'status' => 'Revisi',
+            'updated_at' => now(+7.00)
+        ]);
+        return redirect()->back()->with('sukses', 'Pengajuan revisi berhasil');
     }
     public function pengaturanAkunKec()
     {
