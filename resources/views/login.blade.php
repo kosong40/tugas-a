@@ -55,13 +55,15 @@
 
                         </div>
                         <div class="form-gp">
-                            <label for="exampleInputPassword1">Kata Sandi</label>
-                            <input type="password" name="password" id="exampleInputPassword1" autocomplete="off">
+                            <label for="exampleInputPassword1">Kata Sandi <span id="teks" style="color:red">Caps Lock menyala</span></label>
+                            <input type="password" name="password" id="form-password" autocomplete="off">
                             <a onclick="show()" href="#"><i class="ti-lock"> </i></a>
+                           
                         </div>
                         @php
                         $acak = substr(str_shuffle("1234567890"),0,6);
                         @endphp
+                         
                         <h1 align="center" oncopy="return false"><label for="" class="label-control">{{$acak}}</label>
                         </h1><br>
                         <div class="form-gp">
@@ -69,7 +71,8 @@
                             <label for="kode">Kode</label>
                             <input onpaste="return false" type="text" name="kode" id="kode" autocomplete="off">
                         </div>
-                        <p align="center" style="color:red">Kode menggunakan huruf kapital</p><br><br>
+                        <p align="center" style="color:red">Kode menggunakan huruf kapital</p>
+                        
                         @csrf
                         <div class="submit-btn-area">
                             <button id="form_submit" type="submit">Masuk <i class="ti-arrow-right"></i></button>
@@ -125,13 +128,27 @@
     <script src="{{url('dashboard/assets/js/scripts.js')}}"></script>
     <script>
         function show(){
-            var x = document.getElementById("exampleInputPassword1");
+            var x = document.getElementById("form-password");
             if(x.type == "password"){
                 x.type = "text";
             }else{
                 x.type = "password";
             }
         }
+    </script>
+<script>
+    $(function(){
+        $("#teks").hide(true);
+    });
+    var input = document.getElementById("form-password");
+    var hallo = document.getElementById("teks");
+    input.addEventListener("keyup", function(event) {
+    if (event.getModifierState("CapsLock")) {
+        hallo.style.display = "block";
+        } else {
+        hallo.style.display = "none"
+        }
+    });
     </script>
 </body>
 
