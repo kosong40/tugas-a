@@ -238,7 +238,7 @@ class KecamatanV2 extends Controller
     public function pengaturanAkunKec()
     {
         $admin = Admin::where('username', session('username'))->first();
-        $daerah = Daerah::where('admin_id', $admin->id)->first();
+        $daerah = Daerah::where('id', $admin->daerah_id)->first();
         $data = [
             'admin' => $admin,
             'daerah' => $daerah
@@ -319,5 +319,58 @@ class KecamatanV2 extends Controller
             'nip'           =>  $request['nip']
         ]);
         return redirect()->back()->with('sukses', 'Berhasil mengubah informasi Kecamatan');
+    }
+    public function CetakPelayanan($slug,$kode)
+    {
+        // dd([$slug,$kode]);
+        $daerah = Daerah::where('nama_daerah', 'Pemalang')->get();
+        if($slug == "izin-reklame"){
+        $layanan = DB::table("$slug")
+            ->join('pemohons', 'pemohons.id', '=', "$slug.id_pemohon")
+            ->join('daerahs', 'daerahs.id', '=', 'pemohons.daerah_id')
+            ->join('pelayanans', 'pelayanans.id', '=', 'pemohons.pelayanan_id')
+            ->join('jenis-reklame','jenis-reklame.id','=',"$slug.id_reklame")
+            ->where("pemohons.kode", $kode)
+            ->get();
+        }else{
+        $layanan = DB::table("$slug")
+            ->join('pemohons', 'pemohons.id', '=', "$slug.id_pemohon")
+            ->join('daerahs', 'daerahs.id', '=', 'pemohons.daerah_id')
+            ->join('pelayanans', 'pelayanans.id', '=', 'pemohons.pelayanan_id')
+            ->where("pemohons.kode", $kode)
+            ->get();
+        }
+        // dd($layanan);
+        $data = [
+            'nama'      =>  session('nama'),
+            'username'  =>  session('username'),
+            'level'     =>  session('level'),
+            'token'     =>  session('token'),
+            'layanan' => $layanan,
+            'daerah' => $daerah
+        ];
+        // dd($data);  
+        return view("surat/$slug", $data);
+    }
+    public function CetakSublayanan($slug,$kode)
+    {
+        $layanan = DB::table("$slug")
+            ->join('pemohons', 'pemohons.id', '=', "$slug.id_pemohon")
+            ->join('daerahs', 'daerahs.id', '=', 'pemohons.daerah_id')
+            ->join('pelayanans', 'pelayanans.id', '=', 'pemohons.pelayanan_id')
+            ->join('sublayanans', 'sublayanans.id', '=', 'pemohons.sublayanan_id')
+            ->where("pemohons.kode", $kode)
+            ->get();
+        $daerah = Daerah::where('nama_daerah', 'Pemalang')->get();
+        $data = [
+            'nama'      =>  session('nama'),
+            'username'  =>  session('username'),
+            'level'     =>  session('level'),
+            'token'     =>  session('token'),
+            'layanan' => $layanan,
+            'daerah' => $daerah
+        ];
+        // dd($data);
+        return view("surat/$slug", $data);
     }
 }

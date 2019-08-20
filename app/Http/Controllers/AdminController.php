@@ -40,7 +40,6 @@ class AdminController extends Controller
                     ]);
                     Admin::where('username', $username)->update([
                         'status' => '1',
-                        'remember_token' => $request['_token'],
                         'updated_at' => now(+7.00)
                     ]);
                     if ($admins->level == "1") {
@@ -74,7 +73,6 @@ class AdminController extends Controller
         $username   =   session('username');
         Admin::where('username', $username)->update([
             'status' => '0',
-            'remember_token' => '',
             'updated_at' => now(+7.00)
         ]);
         session()->flush();
@@ -145,12 +143,6 @@ class AdminController extends Controller
                     'status'    =>  '0',
                     'level'     =>  '2',
                     'created_at' => now(+7.00)
-                ]);
-            }
-            $admin  =   Admin::where('username', $request['username'])->get();
-            foreach ($admin as $admin) {
-                Daerah::where('nama_daerah', str_replace("Admin", "", $request['username']))->update([
-                    'admin_id' => $admin->id
                 ]);
             }
             return redirect()->back()->with('sukses', 'Berhasil menambahkan admin');

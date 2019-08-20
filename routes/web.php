@@ -124,12 +124,16 @@ Route::group(['middleware' => ['sesi']], function () {
         route::get('/data-layanan/{slug}/{slug1}', 'KecamatanV2@dataSublayanan');
 
         route::get('/data-layanan/{slug}/{kode}/detail', 'KecamatanV2@LayananDetail');
+        route::get('/data-layanan/{slug}/{kode}/cetak','KecamatanV2@CetakPelayanan')->name('cetak.surat.pelayanan');
+
         route::get('/data-sublayanan/{slug}/{kode}/detail', 'KecamatanV2@SublayananDetail');
+        route::get('/data-sublayanan/{slug}/{kode}/cetak','KecamatanV2@CetakSublayanan')->name('cetak.surat.sublayanan');
 
         route::get('/admin-desa', 'KecamatanV2@adminDesa');
         route::post('/add-nosk/{id}/{slug}/{kode}', 'KecamatanV2@addNoSK')->name('add_nosk');
         route::post('/revisi/{id}/{slug}/{kode}','KecamatanV2@revForm')->name('rev_formulir');
         route::get('/setujuForm/{id}/{slug}/{kode}', 'KecamatanV2@SetujuKec')->name('setujuForm');
+
 
         route::get('/pengaturan-akun', 'KecamatanV2@pengaturanAkunKec')->name('pengaturanAkunKec');
         route::post('/pengaturan-akun/profil-akun', 'KecamatanV2@akunProfil')->name('profilAkun');

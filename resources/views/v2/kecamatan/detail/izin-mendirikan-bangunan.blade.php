@@ -11,7 +11,8 @@
 @if($data->status == "Setuju" && $data->no_sk != null)
 <div class="card-body">
     <h3>
-        <h3 class="text-center">Cetak surat <a href="">disini</a></h3>
+        {{-- <h3 class="text-center">Cetak surat <a href="">disini</a></h3> --}}
+        <h3 class="text-center">Cetak surat <a href="{{route("cetak.surat.pelayanan",[$data->slug,$kode])}}">disini</a></h3>
     </h3>
 </div>
 @else

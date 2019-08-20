@@ -10,7 +10,8 @@
 @if(session('username') == "AdminKecamatan")
 @if($data->status == "Setuju" && $data->no_sk != null)
 <div class="card-body">
-    <h3 class="text-center">Surat siap dicetak</h3>
+    {{-- <h3 class="text-center">Surat siap dicetak</h3> --}}
+    <h3 class="text-center">Cetak surat <a href="{{route("cetak.surat.sublayanan",[$data->slug,$kode])}}">disini</a></h3>
 </div>
 @else
     <div class="card-body">

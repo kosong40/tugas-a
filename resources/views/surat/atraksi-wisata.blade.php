@@ -62,7 +62,7 @@
         case '12':$bulan = "Desember";break;
     }
 @endphp
-<body >
+<body onload="window.print()">
 <p align="center"><img style="width:2.43cm;height:2.91cm"  src="{{url('img/logosurat.jpg')}}" alt=""></p>
 <p style="font-size:14pt" align="center">PEMERINTAH KABUPATEN PEMALANG</p>
 <p style="font-size:16pt" align="center"><b>KECAMATAN PEMALANG</b></p>

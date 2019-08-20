@@ -5,7 +5,7 @@
         font-size:12pt;
     }
 </style>
-<body>
+<body onload="window.print()">
 <p align="center"><img style="width:2.12cm;height:2.7cm"  src="{{url('img/logosurat.jpg')}}" alt=""></p>
 <p style="font-size:16pt" align="center">PEMERINTAH KABUPATEN PEMALANG</p>
 <p style="font-size:18pt" align="center">KECAMATAN PEMALANG</p><br>

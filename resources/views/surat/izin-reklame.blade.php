@@ -198,7 +198,7 @@
                 <tr>
                     <td valign="top"><p>Jenis Reklame</p></td>
                     <td valign="top"><p>:</p></td>
-                    <td><p>{{$item->jenis_reklame}}</p></td>
+                    <td><p>{{$item->nama_reklame}}</p></td>
                 </tr>
                 <tr>
                     <td valign="top"><p>Banyaknya</p></td>

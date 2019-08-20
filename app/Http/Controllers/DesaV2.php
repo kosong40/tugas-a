@@ -436,7 +436,7 @@ class DesaV2 extends Controller
     public function pengaturanAkun()
     {
         $admin = Admin::where('username', session('username'))->first();
-        $daerah = Daerah::where('admin_id', $admin->id)->first();
+        $daerah = Daerah::where('id', $admin->daerah_id)->first();
         $data = [
             'admin' => $admin,
             'daerah' => $daerah

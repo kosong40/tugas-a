@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             ['nama_daerah'=>'Paduraksa','jenis_daerah'=>'Kelurahan','kepala_daerah'=>'-','nip'=>null],
             ['nama_daerah'=>'Pegongsoran','jenis_daerah'=>'Desa','kepala_daerah'=>'-','nip'=>null],
             ['nama_daerah'=>'Pelutan','jenis_daerah'=>'Kelurahan','kepala_daerah'=>'-','nip'=>null],
-            ['nama_daerah'=>'Pemalang','jenis_daerah'=>'Kecamatan','kepala_daerah'=>'-','nip'=>null],
+            ['nama_daerah'=>'Pemalang','jenis_daerah'=>'Kecamatan','kepala_daerah'=>'SUHIRMAN, S.Sos., M.Si','nip'=>'19671213 199803 1 005'],
             ['nama_daerah'=>'Saradan','jenis_daerah'=>'Desa','kepala_daerah'=>'-','nip'=>null],
             ['nama_daerah'=>'Sewaka','jenis_daerah'=>'Desa','kepala_daerah'=>'-','nip'=>null],
             ['nama_daerah'=>'Sugihwaras','jenis_daerah'=>'Kelurahan','kepala_daerah'=>'-','nip'=>null],
@@ -53,9 +53,9 @@ class DatabaseSeeder extends Seeder
             ['level'=>'Kecamatan'],
             ['level'=>'Desa/Kelurahan']
         ]);
-        DB::table('daerahs')->where('nama_daerah','Pemalang')->update([
-            'admin_id' => 1
-        ]);
+        // DB::table('daerahs')->where('nama_daerah','Pemalang')->update([
+        //     'admin_id' => 1
+        // ]);
 
         $ter    =   "Perizinan Terstruktur";
         $tidk   =   "Perizinan Tidak Terstruktur";

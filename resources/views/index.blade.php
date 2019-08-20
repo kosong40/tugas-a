@@ -50,7 +50,7 @@
                         <a class="nav-link js-scroll-trigger" href="#features">Pelayanan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#contact">Kontak</a>
+                        <a class="nav-link js-scroll-trigger" href="#contact">Alamat</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{route('login')}}" class="nav-link">Login</a>
@@ -90,9 +90,7 @@
             <div class="row">
                 <div class="col-md-8 mx-auto">
                     <h2 class="section-heading">Sistem Informasi Pelayanan Publik Online (SIPPOL)</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit vel harum aspernatur sunt, itaque non
-                        veritatis, nam excepturi, maxime qui dolorum laboriosam facere corporis! Eos beatae aliquid voluptatum
-                        in laborum.</p>
+                    <p>Merupakan sistem informasi yang menghimpun pelayanan administrasi yang ada di Kecamatan Pemalang</p>
                 </div>
             </div>
         </div>
@@ -102,7 +100,7 @@
         <div class="container">
             <div class="section-heading text-center">
                 <h2>Pelayanan</h2>
-                <p class="text-muted">Terdapat 4 Pelayanan yaitu</p>
+                <p class="text-muted">Terdapat beberapa Pelayanan antara lain</p>
                 <hr>
             </div>
             <div class="row">
@@ -113,14 +111,12 @@
                                 <div class="feature-item">
                                     <i class="icon-home text-primary"></i>
                                     <h4>Izin Mendirikan Bangunan</h4>
-                                    <p class="text-muted">Ready to use HTML/CSS device mockups, no Photoshop required!</p>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="feature-item">
                                     <i class="icon-bubble text-primary"></i>
                                     <h4>Izin Reklame</h4>
-                                    <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
                                 </div>
                             </div>
                         </div>
@@ -129,14 +125,12 @@
                                 <div class="feature-item">
                                     <i class="icon-basket text-primary"></i>
                                     <h4>Izin Usaha Mikro dan Kecil</h4>
-                                    <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="feature-item">
                                     <i class="icon-map text-primary"></i>
                                     <h4>Izin Pariwisata</h4>
-                                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
                                 </div>
                             </div>
                         </div>
@@ -146,54 +140,15 @@
         </div>
     </section>
 
-    <section class="cta">
-        <div class="cta-content">
-            <div class="container">
-                <h2>Stop waiting.<br>Start building.</h2>
-                <a href="#contact" class="btn btn-outline btn-xl js-scroll-trigger">Let's Get Started!</a>
-            </div>
-        </div>
-        <div class="overlay"></div>
-    </section>
-
     <section class="contact bg-primary" id="contact">
         <div class="container">
-            <h2>We
-                <i class="fas fa-heart"></i> new friends!</h2>
-            <ul class="list-inline list-social">
-                <li class="list-inline-item social-twitter">
-                    <a href="#">
-            <i class="fab fa-twitter"></i>
-          </a>
-                </li>
-                <li class="list-inline-item social-facebook">
-                    <a href="#">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-                </li>
-                <li class="list-inline-item social-google-plus">
-                    <a href="#">
-            <i class="fab fa-google-plus-g"></i>
-          </a>
-                </li>
-            </ul>
+            <h3 class="center-text"> Jl. DI Panjaitan Nomor 205 Pemalang Telp/Fax (0284) 321004</h3>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>&copy; Your Website 2019. All Rights Reserved.</p>
-            <ul class="list-inline">
-                <li class="list-inline-item">
-                    <a href="#">Privacy</a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="#">Terms</a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="#">FAQ</a>
-                </li>
-            </ul>
+        <p>© Sistem Informasi Pelayanan Publik Online ( SIPPOL ) Kecamatan Pemalang Tahun {{date('Y')}}</p>
         </div>
     </footer>
 

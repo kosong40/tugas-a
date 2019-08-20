@@ -101,18 +101,6 @@
                                     <h5 class="m-b-10 user-name font-medium">
                                         {{session('username')}}
                                     </h5>
-                                    <a href="javascript:void(0)" class="btn btn-circle btn-sm m-r-5" id="Userdd" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        <i class="ti-settings"></i>
-                                    </a>
-                                    <div class="dropdown-menu animated flipInY" aria-labelledby="Userdd">
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{route('pengaturanAkunKec')}}">
-                                            <i class="ti-settings m-r-5 m-l-5"></i> Pengaturan Akun</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{route('keluar')}}">
-                                            <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
-                                    </div>
                                 </div>
                             </div>
                             <!-- End User Profile-->
@@ -140,6 +128,20 @@
                                    " aria-expanded="false">
                                 <i class="icon-Pencil"></i>
                                 <span class="hide-menu">Pengaturan Layanan</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('pengaturanAkunKec')}}
+                                   " aria-expanded="false">
+                                <i class="icon-User"></i>
+                                <span class="hide-menu">Pengaturan Akun</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('keluar')}}
+                                   " aria-expanded="false">
+                                <i class="fa fa-power-off"></i>
+                                <span class="hide-menu">Keluar</span>
                             </a>
                         </li>
                     </ul>

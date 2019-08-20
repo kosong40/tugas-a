@@ -50,7 +50,7 @@
                     @if($data->status == "Sudah ada nomor SK" && $data->no_sk != null)
                         <p id="sst" align="center" class="btn btn-success btn-lg">Setujui Permohonan <i class="fa fa-check"></i></p>
                     @else
-
+                    
                     @endif
                     <h4 class="card-title m-t-10">Pelayanan <br> {{$data->pelayanan}} <br>( {{$data->subpelayanan}} )</h4>
                     @if ($data->no_sk ==null)

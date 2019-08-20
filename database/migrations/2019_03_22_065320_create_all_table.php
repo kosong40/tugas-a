@@ -17,6 +17,13 @@ class CreateAllTable extends Migration
             $table->increments('id');
             $table->string('level');
         });
+        Schema::create('daerahs', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nama_daerah');
+            $table->string('jenis_daerah');
+            $table->string('kepala_daerah');
+            $table->string('nip')->nullable();
+        });
         Schema::create('admins', function (Blueprint $table) {
             $table->increments('id');
             $table->string('username');
@@ -24,21 +31,13 @@ class CreateAllTable extends Migration
             $table->string('email')->unique();
             $table->string('nama');
             $table->string('kontak');
-            $table->string('daerah_id');
+            $table->Integer('daerah_id')->unsigned();
+            $table->foreign('daerah_id')->references('id')->on('daerahs');
             $table->string('status')->default("0");
             $table->string('level');
-            $table->rememberToken();
             $table->timestamps();
         });
-        Schema::create('daerahs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('admin_id')->nullable();
-            $table->foreign('admin_id')->references('id')->on('admins');
-            $table->string('nama_daerah');
-            $table->string('jenis_daerah');
-            $table->string('kepala_daerah');
-            $table->string('nip')->nullable();
-        });
+        
         Schema::create('pelayanans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('pelayanan');
