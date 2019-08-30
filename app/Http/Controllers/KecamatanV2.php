@@ -17,12 +17,14 @@ use PDF;
 
 class KecamatanV2 extends Controller
 {
+
     public function home()
     {
+        // dd(Pemohon::getAllPemohon());
         $tgl = date('Y-m-d');
         // dd(Pemohon::where('created_at','like',"$tgl%")->get());
-        $dataMasuk  = count(DB::table("pemohons")->whereDate('created_at', DB::raw('CURDATE()'))->get());
-        $dataTotal  = count(DB::table('pemohons')->get());
+        $dataMasuk  = count(Pemohon::getPemohonToday());
+        $dataTotal  = count(Pemohon::get());
         $pelayanan  = Pelayanan::get();
         $daerah     = Daerah::where('nama_daerah', '<>', 'Pemalang')->get();
         $dataPemohon = Pemohon::get();
@@ -125,18 +127,15 @@ class KecamatanV2 extends Controller
     }
     public function LayananDetail($slug, $kode)
     {
-        // dd($kode);
-        // dd(DB::table("$slug")->get());
-        $dataDetail = DB::table("$slug")
-            ->join('pemohons', 'pemohons.id', '=', "$slug.id_pemohon")
-            ->join('daerahs', 'daerahs.id', '=', 'pemohons.daerah_id')
-            ->join('pelayanans', 'pelayanans.id', '=', 'pemohons.pelayanan_id')
-            ->where('pemohons.kode', "$kode")
-            ->first();
-        $getID = DB::table("pemohons")
-            ->join("$slug", "$slug.id_pemohon", '=', 'pemohons.id')
-            ->where('pemohons.kode', "$kode")
-            ->first();
+        
+        // $dataDetail = DB::table("$slug")
+        //     ->join('pemohons', 'pemohons.id', '=', "$slug.id_pemohon")
+        //     ->join('daerahs', 'daerahs.id', '=', 'pemohons.daerah_id')
+        //     ->join('pelayanans', 'pelayanans.id', '=', 'pemohons.pelayanan_id')
+        //     ->where('pemohons.kode', "$kode")
+        //     ->first();
+        $dataDetail = Pemohon::getDetailPemohon1($slug,$kode);
+        $getID = Pemohon::getIDPemohon($slug,$kode);
         $pelayanan = Pelayanan::where('slug', $slug)->first();
         if ($slug == "izin-reklame") {
             $reklame = DB::table('jenis-reklame')->find($dataDetail->id_reklame);
@@ -161,17 +160,8 @@ class KecamatanV2 extends Controller
     }
     public function SublayananDetail($slug, $kode)
     {
-        $dataDetail = DB::table("$slug")
-            ->join('pemohons', 'pemohons.id', '=', "$slug.id_pemohon")
-            ->join('daerahs', 'daerahs.id', '=', 'pemohons.daerah_id')
-            ->join('pelayanans', 'pelayanans.id', '=', 'pemohons.pelayanan_id')
-            ->join('sublayanans', 'sublayanans.id', '=', 'pemohons.sublayanan_id')
-            ->where('pemohons.kode', "$kode")
-            ->first();
-        $getID = DB::table("pemohons")
-            ->join("$slug", "$slug.id_pemohon", '=', 'pemohons.id')
-            ->where('pemohons.kode', "$kode")
-            ->first();
+        $dataDetail = Pemohon::getDetailPemohon2($slug,$kode);
+        $getID = Pemohon::getIDPemohon($slug,$kode);
         $sublayanan = Sublayanan::where('slug', $slug)->first();
         $pelayanan = Pelayanan::where('id', $dataDetail->pelayanan_id)->first();
         $data = [

@@ -11,34 +11,34 @@
     <div class="col-sm-12 col-lg-3">
             <div class="card bg-light">
                 <div class="card-body">
-                    <h5 class="card-title text-center">{{$item->subpelayanan}}</h5>
+                    <h5 class="card-title text-center">{{$sublayanan->subpelayanan}}</h5>
                     <table class="table no-border mini-table m-t-20">
                         <tbody>
                             <tr>
                                 <td class="text-muted">Total</td>
-                                <td class="font-medium">{{count($pemohon->where('sublayanan_id',$item->id))}}</td>
+                                <td class="font-medium">{{count($pemohon->where('sublayanan_id',$sublayanan->id))}}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">Siap Dicetak</td>
                                 <td class="font-medium">
-                                    {{count($pemohon->where('sublayanan_id',$item->id)->where('status','Setuju'))}}</td>
+                                    {{count($pemohon->where('sublayanan_id',$sublayanan->id)->where('status','Setuju'))}}</td>
                             </tr>
                             <tr>
                                 <td class="text-muted">Sudah ada No SK</td>
                                 <td class="font-medium">
-                                    {{count($pemohon->where('sublayanan_id',$item->id)->where('status','Sudah ada nomor SK'))}}
+                                    {{count($pemohon->where('sublayanan_id',$sublayanan->id)->where('status','Sudah ada nomor SK'))}}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-muted">Belum ada No SK</td>
                                 <td class="font-medium">
-                                    {{count($pemohon->where('sublayanan_id',$item->id)->where('status','Belum'))}}</td>
+                                    {{count($pemohon->where('sublayanan_id',$sublayanan->id)->where('status','Belum'))}}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <p class="text-center"><a href="#{{$item->slug}}" data-toggle="modal" class="btn btn-info">Informasi &nbsp;<i class="ti-info-alt"></i></a></p>
-                   <p class="text-center"> <a href="{{route('formSublayanan-desa',[$pelayanan->slug,$item->slug])}}" class="btn btn-success">Formulir <i class="ti-pencil"></i></a></p>
-                    <p align="center"><a class="btn btn-warning" href="{{url('desa/v2/data-pemohon/'.$slug.'/'.$item->slug)}}">Data Pemohon 
+                    <p class="text-center"><a href="#{{$sublayanan->slug}}" data-toggle="modal" class="btn btn-info">Informasi &nbsp;<i class="ti-info-alt"></i></a></p>
+                   <p class="text-center"> <a href="{{route('formSublayanan-desa',[$pelayanan->slug,$sublayanan->slug])}}" class="btn btn-success">Formulir <i class="ti-pencil"></i></a></p>
+                    <p align="center"><a class="btn btn-warning" href="{{url('desa/v2/data-pemohon/'.$slug.'/'.$sublayanan->slug)}}">Data Pemohon 
                     <i class="ti-file"></i></a></p>
                 </div>
             </div>

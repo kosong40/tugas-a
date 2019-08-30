@@ -94,7 +94,7 @@ class DesaV2 extends Controller
             'scan_gambar_rencana' => 'required | mimes:jpeg,jpg,png,PNG,pdf,txt | max:2048',
             'scan_pengantar' => 'required | mimes:jpeg,jpg,png,PNG,pdf,txt | max:2048',
         ], Kustom::validasi());
-        $pemohon = Pemohon::create([
+        $data = [
             'nama'  =>  $request['nama'],
             'kode'  => Kustom::generateKode(6),
             'nik'   =>  $request['nik'],
@@ -107,7 +107,8 @@ class DesaV2 extends Controller
             'pelayanan_id'  => $request['pelayanan_id'],
             'created_at'    =>  now(+7.00),
             'updated_at'   => null
-        ]);
+        ];
+        $pemohon = Pemohon::addPemohon1($data);
         $id_pemohon = $pemohon->id;
 
         $a  =   $request->file('scan_ktp');
@@ -420,7 +421,6 @@ class DesaV2 extends Controller
         $struktur_organisasi = Kustom::uploadBerkas($request->file('struktur_organisasi'),"atraksi-wisata","struktur_organisasi");
         DB::table('atraksi-wisata')->insert([
             'id_pemohon'    => $id_pemohon,
-
             'umur'      => $request['umur'],
             'nama_usaha'    => $request['nama_usaha'],
             'alamat_usaha'  =>  $request['alamat_usaha'],
